@@ -63,6 +63,47 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        /* Efekat otvaranja slika u sekciji Naš Ambijent odozgo na dole kako se skroluje */
+        .gallery-reveal-card {
+            opacity: 0;
+            transform: translateY(-28px) scale(0.98);
+            filter: blur(2px);
+            transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+                        filter 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform, filter;
+        }
+        .gallery-reveal-card.is-open {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            filter: blur(0px);
+        }
+
+        /* Hero Animation Styles */
+        @keyframes steamRise1 {
+            0% { transform: translateY(8px) scaleY(0.9); opacity: 0.15; }
+            50% { opacity: 0.65; }
+            100% { transform: translateY(-18px) scaleY(1.15); opacity: 0; }
+        }
+        @keyframes steamRise2 {
+            0% { transform: translateY(10px) scaleY(0.85); opacity: 0.25; }
+            50% { opacity: 0.75; }
+            100% { transform: translateY(-22px) scaleY(1.2); opacity: 0; }
+        }
+        @keyframes spinSlow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        @keyframes fadeInHero {
+            from { opacity: 0; transform: scale(0.96) translateY(6px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .animate-steam1 { animation: steamRise1 2.8s ease-in-out infinite; }
+        .animate-steam2 { animation: steamRise2 3.4s ease-in-out infinite 0.5s; }
+        .animate-steam3 { animation: steamRise1 3.1s ease-in-out infinite 1.1s; }
+        .animate-spin-slow { animation: spinSlow 32s linear infinite; }
+        .animate-fadeInHero { animation: fadeInHero 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
     </style>
 </head>
 <body class="bg-sphere-base text-sphere-dark font-sans antialiased selection:bg-sphere-gold selection:text-white">
@@ -174,17 +215,30 @@
                     </div>
                 </div>
 
-                <!-- Glavna Hero Slika -->
+                <!-- Glavna Hero Dekorativna Video Animacija -->
                 <div class="lg:col-span-6 fade-in-section">
-                    <div class="relative mx-auto max-w-md lg:max-w-none">
-                        <div class="relative overflow-hidden shadow-2xl rounded-sm aspect-[4/5] bg-stone-200">
-                            <img src="./slika2.jpg" 
-                                 alt="Slovanka Specijalitet Pica" 
-                                 class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700">
-                            <div class="absolute inset-0 bg-gradient-to-t from-sphere-dark/40 via-transparent to-transparent"></div>
+                    <div class="relative mx-auto max-w-md lg:max-w-none select-none pointer-events-none">
+                        <!-- Kontejner animacije: čist, bez dugmića, tajm linija i tekstova -->
+                        <div class="relative overflow-hidden shadow-2xl rounded-sm aspect-[4/5] bg-[#12110e] border border-sphere-gold/30">
+                            <video id="hero-ambient-video"
+                                   autoplay
+                                   loop
+                                   muted
+                                   playsinline
+                                   poster="./slovanka_sajt_poster.jpg"
+                                   class="w-full h-full object-cover scale-[1.01]">
+                                <source src="./slovanka_sajt.mp4" type="video/mp4">
+                                <source src="./slovanka_sajt.webm" type="video/webm">
+                                <source src="./slovnak.webm" type="video/webm">
+                            </video>
+
+                            <!-- Diskretan preliv za uklapanje u dizajn sajta -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-black/10 pointer-events-none"></div>
                         </div>
-                        <div class="absolute -top-3 -left-3 w-24 h-24 border-t-2 border-l-2 border-sphere-gold/50 pointer-events-none -z-10"></div>
-                        <div class="absolute -bottom-3 -right-3 w-24 h-24 border-b-2 border-r-2 border-sphere-gold/50 pointer-events-none -z-10"></div>
+
+                        <!-- Zlatni ukrasni uglovi -->
+                        <div class="absolute -top-3 -left-3 w-16 h-16 border-t border-l border-sphere-gold/40 pointer-events-none -z-10"></div>
+                        <div class="absolute -bottom-3 -right-3 w-16 h-16 border-b border-r border-sphere-gold/40 pointer-events-none -z-10"></div>
                     </div>
                 </div>
 
@@ -1292,66 +1346,72 @@
             <p id="gallery-desc" class="text-sphere-muted text-xs uppercase tracking-widest mt-4">Harmonija detalja, toplina drveta i sunčana terasa</p>
         </div>
 
-        <!-- Bento Collage Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 md:grid-rows-4 md:h-[720px] lg:h-[820px] gap-4 sm:gap-5 fade-in-section">
+        <!-- Bento Collage Grid sa otvaranjem odozgo na dole kako skrolujete -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 md:grid-rows-4 md:h-[720px] lg:h-[820px] gap-4 sm:gap-5">
             
-            <!-- Velika slika 1 (Gore levo: Letnja Terasa) -->
-            <div class="group relative overflow-hidden bg-stone-200 rounded-sm md:col-start-1 md:col-span-2 md:row-start-1 md:row-span-2 sm:col-span-2 min-h-[260px] md:min-h-0 shadow-sm cursor-pointer" onclick="openLightbox('./slika7.jpg', 'Prostrana Letnja Terasa', 'Otvoreni Prostor')">
+            <!-- Velika slika 1 (Gore levo: Letnja Terasa - red 1-2) -->
+            <div data-order="0" class="gallery-reveal-card group relative overflow-hidden bg-stone-200 rounded-sm md:col-start-1 md:col-span-2 md:row-start-1 md:row-span-2 sm:col-span-2 min-h-[260px] md:min-h-0 shadow-sm hover:shadow-xl transition-shadow duration-500 cursor-pointer" onclick="openLightbox('./slika7.jpg', 'Prostrana Letnja Terasa', 'Otvoreni Prostor')">
+                <div class="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#bda068] to-transparent opacity-80 z-20 pointer-events-none group-hover:h-[3px] transition-all"></div>
                 <img src="./slika7.jpg" 
-                     alt="Širi kadar letnje terase" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-5">
+                     alt="Širi kadar letnje terase" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5 z-10">
                     <span id="gallery-item1-cat" class="text-[10px] uppercase tracking-widest text-sphere-gold font-semibold">Otvoreni Prostor</span>
                     <span id="gallery-item1-title" class="text-white font-serif text-lg">Prostrana Letnja Terasa</span>
                 </div>
             </div>
 
-            <!-- Manja slika 2 (Gore desno 1: Pica) -->
-            <div class="group relative overflow-hidden bg-stone-200 rounded-sm md:col-start-3 md:col-span-1 md:row-start-1 md:row-span-1 sm:col-span-1 min-h-[190px] md:min-h-0 shadow-sm cursor-pointer" onclick="openLightbox('./slika1.jpg', 'Pica & Domaći Specijaliteti', 'Kuhinja & Ukusi')">
+            <!-- Manja slika 2 (Gore desno 1: Pica - red 1) -->
+            <div data-order="1" class="gallery-reveal-card group relative overflow-hidden bg-stone-200 rounded-sm md:col-start-3 md:col-span-1 md:row-start-1 md:row-span-1 sm:col-span-1 min-h-[190px] md:min-h-0 shadow-sm hover:shadow-xl transition-shadow duration-500 cursor-pointer" onclick="openLightbox('./slika1.jpg', 'Pica & Domaći Specijaliteti', 'Kuhinja & Ukusi')">
+                <div class="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#bda068] to-transparent opacity-80 z-20 pointer-events-none group-hover:h-[3px] transition-all"></div>
                 <img src="./slika1.jpg" 
-                     alt="Pica i espreso na drvenom stolu" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-5">
+                     alt="Pica i espreso na drvenom stolu" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5 z-10">
                     <span id="gallery-item2-cat" class="text-[10px] uppercase tracking-widest text-sphere-gold font-semibold">Kuhinja & Ukusi</span>
                     <span id="gallery-item2-title" class="text-white font-serif text-base">Pica & Domaći Specijaliteti</span>
                 </div>
             </div>
 
-            <!-- Manja slika 3 (Gore desno 2: Retro Detalji) -->
-            <div class="group relative overflow-hidden bg-stone-200 rounded-sm md:col-start-3 md:col-span-1 md:row-start-2 md:row-span-1 sm:col-span-1 min-h-[190px] md:min-h-0 shadow-sm cursor-pointer" onclick="openLightbox('./slika9.jpg', 'Retro Detalji & Cigla', 'Enterijer Lokala')">
+            <!-- Manja slika 3 (Gore desno 2: Retro Detalji - red 2) -->
+            <div data-order="2" class="gallery-reveal-card group relative overflow-hidden bg-stone-200 rounded-sm md:col-start-3 md:col-span-1 md:row-start-2 md:row-span-1 sm:col-span-1 min-h-[190px] md:min-h-0 shadow-sm hover:shadow-xl transition-shadow duration-500 cursor-pointer" onclick="openLightbox('./slika9.jpg', 'Retro Detalji & Cigla', 'Enterijer Lokala')">
+                <div class="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#bda068] to-transparent opacity-80 z-20 pointer-events-none group-hover:h-[3px] transition-all"></div>
                 <img src="./slika9.jpg" 
-                     alt="Karirani sto i retro slika" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-5">
+                     alt="Karirani sto i retro slika" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5 z-10">
                     <span id="gallery-item3-cat" class="text-[10px] uppercase tracking-widest text-sphere-gold font-semibold">Enterijer Lokala</span>
                     <span id="gallery-item3-title" class="text-white font-serif text-base">Retro Detalji & Cigla</span>
                 </div>
             </div>
 
-            <!-- Manja slika 4 (Dole levo 1: Šank i Gostoprimstvo) -->
-            <div class="group relative overflow-hidden bg-stone-200 rounded-sm md:col-start-1 md:col-span-1 md:row-start-3 md:row-span-1 sm:col-span-1 min-h-[190px] md:min-h-0 shadow-sm cursor-pointer" onclick="openLightbox('./slika8.jpg', 'Urednost & Gostoprimstvo', 'Šank & Usluga')">
+            <!-- Manja slika 4 (Sredina levo: Šank i Gostoprimstvo - red 3) -->
+            <div data-order="3" class="gallery-reveal-card group relative overflow-hidden bg-stone-200 rounded-sm md:col-start-1 md:col-span-1 md:row-start-3 md:row-span-1 sm:col-span-1 min-h-[190px] md:min-h-0 shadow-sm hover:shadow-xl transition-shadow duration-500 cursor-pointer" onclick="openLightbox('./slika8.jpg', 'Urednost & Gostoprimstvo', 'Šank & Usluga')">
+                <div class="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#bda068] to-transparent opacity-80 z-20 pointer-events-none group-hover:h-[3px] transition-all"></div>
                 <img src="./slika8.jpg" 
-                     alt="Šank i dekoracija sa cvećem" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-5">
+                     alt="Šank i dekoracija sa cvećem" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5 z-10">
                     <span id="gallery-item4-cat" class="text-[10px] uppercase tracking-widest text-sphere-gold font-semibold">Šank & Usluga</span>
                     <span id="gallery-item4-title" class="text-white font-serif text-base">Urednost & Gostoprimstvo</span>
                 </div>
             </div>
 
-            <!-- Manja slika 5 (Dole levo 2: Autentični Detalji) -->
-            <div class="group relative overflow-hidden bg-stone-200 rounded-sm md:col-start-1 md:col-span-1 md:row-start-4 md:row-span-1 sm:col-span-1 min-h-[190px] md:min-h-0 shadow-sm cursor-pointer" onclick="openLightbox('./slika3.jpg', 'Autentični Slovanka Detalji', 'Dekoracija & Atmosfera')">
-                <img src="./slika3.jpg" 
-                     alt="Dekorativne flaše" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-5">
-                    <span id="gallery-item5-cat" class="text-[10px] uppercase tracking-widest text-sphere-gold font-semibold">Dekoracija & Atmosfera</span>
-                    <span id="gallery-item5-title" class="text-white font-serif text-base">Autentični Detalji</span>
+            <!-- Velika slika 6 (Dole desno: Topli Ambijent - redovi 3-4) -->
+            <div data-order="4" class="gallery-reveal-card group relative overflow-hidden bg-stone-200 rounded-sm md:col-start-2 md:col-span-2 md:row-start-3 md:row-span-2 sm:col-span-2 min-h-[260px] md:min-h-0 shadow-sm hover:shadow-xl transition-shadow duration-500 cursor-pointer" onclick="openLightbox('./slika10.jpg', 'Topli Ambijent & Rustični Tonovi', 'Prijatna Atmosfera')">
+                <div class="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#bda068] to-transparent opacity-80 z-20 pointer-events-none group-hover:h-[3px] transition-all"></div>
+                <img src="./slika10.jpg" 
+                     alt="Topli ambijent i rustični drveni tonovi" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5 z-10">
+                    <span id="gallery-item6-cat" class="text-[10px] uppercase tracking-widest text-sphere-gold font-semibold">Prijatna Atmosfera</span>
+                    <span id="gallery-item6-title" class="text-white font-serif text-lg">Topli Ambijent & Rustični Tonovi</span>
                 </div>
             </div>
 
-            <!-- Velika slika 6 (Dole desno: Topli Ambijent) -->
-            <div class="group relative overflow-hidden bg-stone-200 rounded-sm md:col-start-2 md:col-span-2 md:row-start-3 md:row-span-2 sm:col-span-2 min-h-[260px] md:min-h-0 shadow-sm cursor-pointer" onclick="openLightbox('./slika10.jpg', 'Topli Ambijent & Rustični Tonovi', 'Prijatna Atmosfera')">
-                <img src="./slika10.jpg" 
-                     alt="Topli ambijent i rustični drveni tonovi" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-5">
-                    <span id="gallery-item6-cat" class="text-[10px] uppercase tracking-widest text-sphere-gold font-semibold">Prijatna Atmosfera</span>
-                    <span id="gallery-item6-title" class="text-white font-serif text-lg">Topli Ambijent & Rustični Tonovi</span>
+            <!-- Manja slika 5 (Dole levo: Autentični Detalji - red 4) -->
+            <div data-order="5" class="gallery-reveal-card group relative overflow-hidden bg-stone-200 rounded-sm md:col-start-1 md:col-span-1 md:row-start-4 md:row-span-1 sm:col-span-1 min-h-[190px] md:min-h-0 shadow-sm hover:shadow-xl transition-shadow duration-500 cursor-pointer" onclick="openLightbox('./slika3.jpg', 'Autentični Slovanka Detalji', 'Dekoracija & Atmosfera')">
+                <div class="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#bda068] to-transparent opacity-80 z-20 pointer-events-none group-hover:h-[3px] transition-all"></div>
+                <img src="./slika3.jpg" 
+                     alt="Dekorativne flaše" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5 z-10">
+                    <span id="gallery-item5-cat" class="text-[10px] uppercase tracking-widest text-sphere-gold font-semibold">Dekoracija & Atmosfera</span>
+                    <span id="gallery-item5-title" class="text-white font-serif text-base">Autentični Detalji</span>
                 </div>
             </div>
         </div>
@@ -5273,8 +5333,52 @@ Kako pokrenuti:
                 document.querySelectorAll('.fade-in-section').forEach(sec => {
                     observer.observe(sec);
                 });
+
+                // Posmatrač za sekciju Naš Ambijent - otvaranje slika jedna po jedna odozgo na dole
+                const galleryCards = document.querySelectorAll('.gallery-reveal-card');
+                if (galleryCards.length > 0) {
+                    const galleryCardObserver = new IntersectionObserver((entries, obs) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                const card = entry.target;
+                                const order = parseInt(card.getAttribute('data-order') || '0', 10);
+                                const delay = window.innerWidth >= 768 ? order * 120 : (order % 2) * 100;
+                                setTimeout(() => {
+                                    card.classList.add('is-open');
+                                }, delay);
+                                obs.unobserve(card); // Nikad ne sakrivaj slike ponovo!
+                            }
+                        });
+                    }, { 
+                        threshold: 0.05,
+                        rootMargin: '60px 0px 0px 0px'
+                    });
+
+                    galleryCards.forEach(card => {
+                        galleryCardObserver.observe(card);
+                    });
+
+                    // Sigurnosni tajmer: garantovano otvara i prikazuje sve slike
+                    setTimeout(() => {
+                        galleryCards.forEach(c => c.classList.add('is-open'));
+                    }, 1600);
+                }
             } catch (err) {
                 console.warn('IntersectionObserver error:', err);
+                document.querySelectorAll('.gallery-reveal-card').forEach(c => c.classList.add('is-open'));
+            }
+        } else {
+            document.querySelectorAll('.gallery-reveal-card').forEach(c => c.classList.add('is-open'));
+        }
+
+        // ================= HERO DEKORATIVNI AMBIENT VIDEO =================
+        const ambientVideo = document.getElementById('hero-ambient-video');
+        if (ambientVideo) {
+            ambientVideo.defaultMuted = true;
+            ambientVideo.muted = true;
+            const playPromise = ambientVideo.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(() => {});
             }
         }
     </script>

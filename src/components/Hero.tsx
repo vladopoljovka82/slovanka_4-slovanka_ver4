@@ -1,6 +1,7 @@
 import React from 'react';
 import { Utensils, Star, Download, ChevronRight } from 'lucide-react';
 import { useSiteContent } from '../utils/useSiteContent';
+import { HeroAnimation } from './HeroAnimation';
 
 interface HeroProps {
   onOpenReservation: () => void;
@@ -61,22 +62,9 @@ export const Hero: React.FC<HeroProps> = ({ onOpenReservation }) => {
             </div>
           </div>
 
-          {/* Right Hero Image Card */}
+          {/* Right Hero Animated Showcase */}
           <div className="lg:col-span-6">
-            <div className="relative mx-auto max-w-md lg:max-w-none">
-              <div className="relative overflow-hidden shadow-2xl rounded-sm aspect-[4/5] bg-stone-200 group">
-                <img
-                  src="./slika2.jpg"
-                  alt="Slovanka Caffe Pizzeria - Specijalitet Pica"
-                  className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#1e1c18]/40 via-transparent to-transparent" />
-              </div>
-
-              {/* Decorative Luxury Frame Borders */}
-              <div className="absolute -top-3 -left-3 w-24 h-24 border-t-2 border-l-2 border-[#bda068]/50 pointer-events-none -z-10" />
-              <div className="absolute -bottom-3 -right-3 w-24 h-24 border-b-2 border-r-2 border-[#bda068]/50 pointer-events-none -z-10" />
-            </div>
+            <HeroAnimation />
           </div>
         </div>
       </div>
