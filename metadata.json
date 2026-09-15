@@ -1,0 +1,6 @@
+{
+  "name": "Slovanka Caffe Pizzeria",
+  "description": "Zvanični sajt Slovanka Caffe Pizzeria u Selenči (M. Tita 165). Hrskave pice, domaći vojvođanski specijaliteti, kokteli, kafa i prijatna terasa.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

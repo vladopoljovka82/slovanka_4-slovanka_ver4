@@ -1,0 +1,40 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Plus Jakarta Sans", sans-serif;
+
+  --color-sphere-base: #fbf9f5;
+  --color-sphere-dark: #1e1c18;
+  --color-sphere-surface: #f4f0e8;
+  --color-sphere-olive: #484436;
+  --color-sphere-oliveLight: #5c5746;
+  --color-sphere-gold: #bda068;
+  --color-sphere-goldHover: #a68b54;
+  --color-sphere-muted: #767269;
+  --color-sphere-border: #e5dfd5;
+}
+
+@layer base {
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--color-sphere-base);
+    color: var(--color-sphere-dark);
+  }
+}
+
+.tracking-luxury {
+  letter-spacing: 0.3em;
+}
+
+.fade-in-section {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.fade-in-section.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}

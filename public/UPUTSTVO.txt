@@ -1,0 +1,29 @@
+SLOVANKA CAFFE PIZZERIA - VEB SAJT (SELENČA)
+==============================================
+Ovaj folder sadrži kompletan gotov sajt za Slovanka Caffe Pizzeria (Selenča, M. Tita 165):
+
+Sadržaj paketa:
+1. index.html - Glavna samostalna stranica sajta (otvorite dvoklikom u bilo kom pregledaču: Chrome, Firefox, Safari, Edge)
+2. slika1.jpg do slika10.jpg - Sve fotografije lokala, letnje terase, enterijera, pica i kafe
+3. koktel1.jpg do koktel4.jpg - Slike koktela
+4. UPUTSTVO.txt - Ovo uputstvo za korišćenje i postavljanje
+
+Funkcionalnosti sajta:
+- Moderan dizajn i kompletna prezentacija restorana
+- Detaljan Jelovnik sa svim kategorijama (Pizze, Paste, Glavna Jela, Obrok Salate, Palačinke & Poslastice, Doručak)
+- Oznake jela ("Specijalitet Kuće", "Pikantno", "Domaća", "Autentično", "Hit") i trojne cene za pizze (Mala, Velika, Porodična)
+- Pretraga jela u realnom vremenu po nazivu ili sastojcima
+- Dugme za zvaničnu Facebook stranicu sa Facebook ikonicom
+- Sistem recenzija i utisaka gostiju
+- Objedinjeni Administratorski Panel (pristup putem PIN-a: podrazumevani PIN je 1234):
+  * Moderacija Komentara: odobravanje i brisanje utisaka gostiju
+  * Moderacija Jelovnika & Cena: dodavanje, izmena i brisanje kategorija i jela, podešavanje cena i oznaka
+  * Moderacija Tekstova Sajta: jednostavna izmena tekstova po sekcijama sa trenutnim pregledom
+  * Sigurnost & PIN: promena lozinke i opcija „Zaboravljen PIN” sa slanjem koda na vlado.poljovka82@gmail.com
+
+Kako pokrenuti ili postaviti:
+- Lokalno: Dovoljno je da dvokliknete na "index.html" i sajt se odmah otvara u vašem browseru sa svim funkcijama!
+- Na hostingu: Sve ove fajlove jednostavno prebacite u "public_html" (ili root folder) vašeg cPanel/FTP hostinga ili domena.
+
+Slovanka Caffe Pizzeria | Maršala Tita 165, 21425 Selenča
+Telefon: +381 21 774 012 | Email: info@slovankacaffe.com
